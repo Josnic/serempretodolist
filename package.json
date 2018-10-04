@@ -1,0 +1,27 @@
+{
+    "name": "serempretodolist",
+    "version": "1.0.0",
+    "description": "Aplicación web fronted y backend para lista de tareas",
+    "main": "server.js",
+    "scripts": {
+        "start": "node server.js"
+    },
+    "repository": {
+        "type": "git",
+        "url": "git+https://github.com/Josnic/serempretodolist.git"
+    },
+    "keywords": [
+        "lista",
+        "vuejs",
+        "material_design",
+        "socketio",
+        "express",
+        "mongodb"
+    ],
+    "author": "Nicolas Herrera",
+    "license": "ISC",
+    "bugs": {
+        "url": "https://github.com/Josnic/serempretodolist/issues"
+    },
+    "homepage": "https://github.com/Josnic/serempretodolist#readme"
+}
