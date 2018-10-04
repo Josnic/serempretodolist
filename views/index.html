@@ -51,6 +51,13 @@
                                 <div class="text-xs-center">
                                     <button class="btn btn-default waves-effect waves-light">Ingresar</button>
                                 </div>
+
+                                <p v-if="errors.length">
+                                    <b>Please correct the following error(s):</b>
+                                    <ul>
+                                        <li v-for="error in errors">{{ error }}</li>
+                                    </ul>
+                                </p>
                             </form>
 
 
