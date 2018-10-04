@@ -12,10 +12,10 @@ var app = new Vue({
             if (this.user !== "" && this.pass !== "") {
                 console.log("success");
             } else {
-                if (!this.user) {
+                if (!this.user || this.user == "") {
                     this.errors.push('Nombre se usuario requerido.');
                 }
-                if (!this.age) {
+                if (!this.pass || this.pass == "") {
                     this.errors.push('Constraseña requerida.');
                 }
             }
