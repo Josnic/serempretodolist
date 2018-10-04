@@ -43,17 +43,25 @@ app.get(["/index", "/index.html"], function(req, res) {
     res.redirect("/");
 })
 
-app.get("/home", function(req, res) {
+app.get("/home", auth, function(req, res) {
 
 })
 
-app.get("/home.html", function(req, res) {
+app.get("/home.html", auth, function(req, res) {
     res.redirect("/home");
 })
 
 app.get("errorLogin", function(req, res) {
     res.sendFile(path.join(__dirname, "/views/errorLogin.html"));
 })
+
+// Authentication and Authorization Middleware
+var auth = function(req, res, next) {
+    if (req.session && req.session.admin)
+        return next();
+    else
+        return res.sendStatus(401);
+};
 
 app.post("/login", function(req, res) {
     if (!req.query.username || !req.query.password) {
