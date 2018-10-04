@@ -26,3 +26,5 @@ Login.validateUser = function(req, res) {
     });
 
 }
+
+module.exports = hotelController;
