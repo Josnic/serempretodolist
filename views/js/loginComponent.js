@@ -9,7 +9,7 @@ var app = new Vue({
     methods: {
         checkForm: function(e) {
             this.errors = [];
-            if (this.user == "" && this.pass == "") {
+            if (this.user !== "" && this.pass !== "") {
                 console.log("success");
             } else {
                 if (!this.user) {
