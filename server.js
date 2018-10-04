@@ -10,6 +10,13 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+session = require('express-session');
+app.use(session({
+    secret: '2C44-4D44-WppQ38S',
+    resave: true,
+    saveUninitialized: true
+}));
+
 var mongoose = require('mongoose');
 var config = require('./config/config');
 
