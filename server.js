@@ -65,7 +65,8 @@ app.post("/login", function(req, res) {
 })
 
 app.get("/logout", function(req, res) {
-
+    req.session.destroy();
+    res.redirect("/index");
 })
 
 
