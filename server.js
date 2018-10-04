@@ -11,7 +11,7 @@ app.use(function(req, res, next) {
 });
 
 app.use(function(req, res) {
-    response(res, 404, { message: "La url solicitada no se encuentra." });
+    res.status(404).send('La url solicitada no se encuentra.');
 });
 
 var port = process.env.PORT || 3000;
