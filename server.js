@@ -49,7 +49,12 @@ app.get("errorLogin", function(req, res) {
 })
 
 app.post("/login", function(req, res) {
-
+    if (!req.query.username || !req.query.password) {
+        res.redirect("/errorLogin");
+    } else {
+        var Login = require("./controllers/Login");
+        Login.validateUser(req, res);
+    }
 })
 
 app.get("/logout", function(req, res) {
