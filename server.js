@@ -4,6 +4,12 @@ var app = express();
 var server = require('http').createServer(app);
 var path = require("path");
 
+var bodyParser = require('body-parser')
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended: true
+}));
+
 //servir archivos estaticos
 app.use(express.static(path.join(__dirname, '/views')));
 
