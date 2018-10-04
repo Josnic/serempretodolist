@@ -26,6 +26,14 @@ app.get("/home", function(req, res) {
 
 })
 
+app.get("/home.html", function(req, res) {
+    res.redirect("/home");
+})
+
+app.get("errorLogin", function(req, res) {
+    res.sendFile(path.join(__dirname, "/views/errorLogin.html"));
+})
+
 app.post("/login", function(req, res) {
 
 })
