@@ -44,7 +44,7 @@ app.get(["/index", "/index.html"], function(req, res) {
 })
 
 app.get("/home", auth, function(req, res) {
-
+    res.sendFile(path.join("/views/home.html"));
 })
 
 app.get("/home.html", auth, function(req, res) {
