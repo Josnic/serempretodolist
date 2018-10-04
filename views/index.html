@@ -32,17 +32,17 @@
                         <div class="card-block">
 
                             <!--Body-->
-                            <form action="#">
+                            <form @submit="checkForm" id="loginForm" action="#">
 
                                 <div class="md-form">
                                     <i class="fa fa-user prefix"></i>
-                                    <input type="text" id="user" name="user" class="form-control">
+                                    <input type="text" id="user" name="user" v-model="user" class="form-control">
                                     <label for="user">Usuario</label>
                                 </div>
 
                                 <div class="md-form">
                                     <i class="fa fa-lock prefix"></i>
-                                    <input type="password" id="pass" name="pass" class="form-control validate">
+                                    <input type="password" id="pass" name="pass" v-model="pass" class="form-control validate">
                                     <label for="pass">Contraseña</label>
                                 </div>
 
@@ -66,6 +66,8 @@
     <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.3/js/bootstrap.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.1.1/js/mdb.min.js'></script>
+    <script src="https://cdn.jsdelivr.net/npm/vue@2.5.17/dist/vue.js"></script>
+
 
 </body>
 
