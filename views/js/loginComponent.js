@@ -9,11 +9,11 @@ var app = new Vue({
     methods: {
         checkForm: function(e) {
             this.errors = [];
-            if (this.user !== "" && this.pass !== "") {
+            if ((this.user && this.user !== "") && (this.pass && this.pass !== "")) {
                 console.log("success");
             } else {
                 if (!this.user || this.user == "") {
-                    this.errors.push('Nombre se usuario requerido.');
+                    this.errors.push('Nombre de usuario requerido.');
                 }
                 if (!this.pass || this.pass == "") {
                     this.errors.push('Constraseña requerida.');
