@@ -4,7 +4,30 @@ var app = express();
 var server = require('http').createServer(app);
 var path = require("path");
 
+//servir archivos estaticos
 app.use(express.static(path.join(__dirname, '/views')));
+
+//adición de rutas
+app.get("/", function(req, res) {
+    res.sendFile(path.join(__dirname, "/views/index.html"));
+});
+
+app.get(["/index", "/index.html"], function(req, res) {
+    res.redirect("/");
+})
+
+app.get("/home", function(req, res) {
+
+})
+
+app.post("/login", function(req, res) {
+
+})
+
+app.get("/logout", function(req, res) {
+
+})
+
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
