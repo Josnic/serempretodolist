@@ -10,6 +10,20 @@ app.use(bodyParser.urlencoded({
     extended: true
 }));
 
+var mongoose = require('mongoose');
+var config = require('./config/config');
+
+const options = {
+
+    autoIndex: false,
+    reconnectTries: Number.MAX_VALUE,
+    reconnectInterval: 500,
+    poolSize: 10,
+    bufferMaxEntries: 0
+};
+mongoose.connect(config.database, options); // connect to database
+
+
 //servir archivos estaticos
 app.use(express.static(path.join(__dirname, '/views')));
 
