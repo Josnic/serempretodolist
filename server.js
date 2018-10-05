@@ -30,7 +30,13 @@ const options = {
 };
 mongoose.connect(config.database, options); // connect to database
 
-
+// Authentication and Authorization Middleware
+var auth = function(req, res, next) {
+    if (req.session && req.session.admin)
+        return next();
+    else
+        return res.sendStatus(401);
+};
 //servir archivos estaticos
 app.use(express.static(path.join(__dirname, '/views')));
 
@@ -55,13 +61,6 @@ app.get("errorLogin", function(req, res) {
     res.sendFile(path.join(__dirname, "/views/errorLogin.html"));
 })
 
-// Authentication and Authorization Middleware
-var auth = function(req, res, next) {
-    if (req.session && req.session.admin)
-        return next();
-    else
-        return res.sendStatus(401);
-};
 
 app.post("/login", function(req, res) {
     if (!req.query.username || !req.query.password) {
