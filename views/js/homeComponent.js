@@ -103,10 +103,21 @@ Vue.component('task-list', {
             }
         },
         completeTask: function completeTask(task) {
-            task.completed = !task.completed;
+
+            socket.emit("update", { id: task.id, complete: !task.completed }, function(data) {
+                if (data.ok) {
+                    task.completed = !task.completed;
+                } else {
+                    modalAlert.contentModal = "No fue posible actualizar elestado de la tarea. Intenta de nuevo.";
+                    modalAlert.showModal = true;
+                }
+            });
+
+
+
         },
         removeTask: function removeTask(index) {
-            console.log(this.tasks[index].id);
+
             var listTask = this.tasks;
             var i = index;
             socket.emit("delete", { id: this.tasks[index].id }, function(data) {
