@@ -11,6 +11,11 @@ var sessionUser = new Vue({
     el: '#titleUser',
     data: {
         userName: ""
+    },
+    methods: {
+        closeSession: function closeSession() {
+            window.location.href = "/logout";
+        }
     }
 })
 
