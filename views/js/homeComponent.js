@@ -10,10 +10,15 @@ socket = io.connect("http://localhost:3000", {
 var sessionUser = new Vue({
     el: '#titleUser',
     data: {
-        userName: null
-    },
-    computed: {
+        userName: ""
+    }
+})
 
+socket.emit("name user", {}, function(data) {
+    if (data == "" || data == "undefined" || data == null) {
+        window.location.href = "/index";
+    } else {
+        sessionUser.userName = data;
     }
 })
 
