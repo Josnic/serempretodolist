@@ -56,7 +56,7 @@
 
 
     <script id="task-item" type="text/template">
-        <li class="tasks__item">
+        <li class="tasks__item" id="{{task.id}}">
             <button :class="className" @click.self="$emit('complete')">
                       {{ task.title }}
                     </button>

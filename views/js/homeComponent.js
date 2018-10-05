@@ -77,13 +77,22 @@ Vue.component('task-list', {
     methods: {
         addTask: function addTask() {
             if (this.newTask) {
+                socket.emit("add", { name: this.newTask }, function(data) {
+                    if (data.ok) {
+                        this.tasks.push({
+                            id: data.id,
+                            title: this.newTask,
+                            completed: false
+                        });
 
-                this.tasks.push({
-                    title: this.newTask,
-                    completed: false
-                });
+                        this.newTask = '';
+                    } else {
+                        console.log(data.error);
+                        modalAlert.contentModal = "No se pudo guardar la tarea. Intenta de nuevo.";
+                        modalAlert.showModal = true;
+                    }
+                })
 
-                this.newTask = '';
             } else {
                 modalAlert.contentModal = "Digita un texto válido";
                 modalAlert.showModal = true;
