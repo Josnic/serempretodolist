@@ -77,15 +77,16 @@ Vue.component('task-list', {
     methods: {
         addTask: function addTask() {
             if (this.newTask) {
-                socket.emit("add", { name: this.newTask }, function(data) {
+                var myNewTask = this.newTask
+                socket.emit("add", { name: myNewTask }, function(data) {
                     if (data.ok) {
                         this.tasks.push({
                             id: data.id,
-                            title: this.newTask,
+                            title: myNewTask,
                             completed: false
                         });
 
-                        this.newTask = '';
+                        myNewTask = '';
                     } else {
                         console.log(data.error);
                         modalAlert.contentModal = "No se pudo guardar la tarea. Intenta de nuevo.";

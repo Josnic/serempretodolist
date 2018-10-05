@@ -124,6 +124,26 @@ io.sockets.on("connection", function(socket) {
         fn(socket.handshake.session.user)
     })
 
+    socket.on("add", function(data, fn) {
+        var Task = require("./back/controllers/Crud");
+        Task.add(data, fn);
+    })
+
+    socket.on("readAll", function(data, fn) {
+        var Task = require("./back/controllers/Crud");
+        Task.readAll(data, fn);
+    })
+
+    socket.on("delete", function(data, fn) {
+        var Task = require("./back/controllers/Crud");
+        Task.delete(data, fn);
+    })
+
+    socket.on("update", function(data, fn) {
+        var Task = require("./back/controllers/Crud");
+        Task.update(data, fn);
+    })
+
 
     //  console.log(socket.handshake.session.user);
     //console.log(socket.handshake.session.admin);
