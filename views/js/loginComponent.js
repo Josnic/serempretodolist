@@ -10,7 +10,7 @@ var app = new Vue({
         checkForm: function(e) {
             this.errors = [];
             if ((this.user && this.user !== "") && (this.pass && this.pass !== "")) {
-                console.log("success");
+                return true;
             } else {
                 if (!this.user || this.user == "") {
                     this.errors.push('Nombre de usuario requerido.');
