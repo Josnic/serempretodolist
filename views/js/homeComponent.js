@@ -151,6 +151,8 @@ Vue.component('task-item', {
     }
 });
 
+var appList = null;
+
 socket.emit("readAll", {}, function(data) {
     if (data.ok) {
         var arrayTask = [];
@@ -163,7 +165,7 @@ socket.emit("readAll", {}, function(data) {
             })
         }
 
-        new Vue({
+        appList = new Vue({
             el: '#app',
             data: {
                 tasks: arrayTask
