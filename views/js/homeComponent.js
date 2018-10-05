@@ -170,5 +170,4 @@ socket.emit("readAll", {}, function(data) {
             }
         });
     }
-    console.log(data);
 })
