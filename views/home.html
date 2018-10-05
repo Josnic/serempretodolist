@@ -6,6 +6,7 @@
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.0.0-alpha.3/css/bootstrap.min.css'>
     <link rel='stylesheet' href='https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.1.1/css/mdb.min.css'>
     <link rel='stylesheet' href='css/task.css'>
+    <link rel='stylesheet' href='css/modal.css'>
 
 </head>
 
@@ -28,7 +29,7 @@
 
             </h1>
             <div class="tasks__new input-group">
-                <input type="text" class="input-group-field form-control" v-model="newTask" @keyup.enter="addTask" placeholder="New task">
+                <input type="text" class="input-group-field form-control" v-model="newTask" @keyup.enter="addTask" placeholder="Nueva tarea">
                 <span class="input-group-button">
                     <button @click="addTask" 
                             class="btn btn-primary pull-right"
@@ -106,7 +107,7 @@
 
     <div id="modal-component">
 
-        <modal v-if="showModal" @close="showModal = false">
+        <modal v-if="showModal" @close="showModal = false; contentModal = ''">
 
             <h3 slot="header">{{customHeader}}</h3>
             <h5 slot="body">{{contentModal}}</h5>

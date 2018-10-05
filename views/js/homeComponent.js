@@ -27,6 +27,7 @@ socket.emit("name user", {}, function(data) {
     }
 })
 
+
 Vue.component('modal', {
     template: '#modal-template'
 })
@@ -69,6 +70,9 @@ Vue.component('task-list', {
                 });
 
                 this.newTask = '';
+            } else {
+                modalAlert.contentModal = "Digita un texto válido";
+                modalAlert.showModal = true;
             }
         },
         completeTask: function completeTask(task) {
