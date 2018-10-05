@@ -61,6 +61,57 @@
         </li>
     </script>
 
+
+
+
+
+    <!-- template for the modal component -->
+    <script type="text/template" id="modal-template">
+        <transition name="modal">
+            <div class="modal-mask">
+                <div class="modal-wrapper">
+                    <div class="modal-container">
+
+                        <div class="modal-header">
+                            <slot name="header">
+
+                            </slot>
+                        </div>
+
+                        <div class="modal-body">
+                            <slot name="body">
+
+                            </slot>
+                        </div>
+
+                        <div class="modal-footer">
+                            <slot name="footer">
+
+                                <button class="btn btn-default" @click="$emit('close')">
+                                OK
+                              </button>
+                            </slot>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </transition>
+    </script>
+
+
+
+    <div id="modal-component">
+
+        <modal v-if="showModal" @close="showModal = false">
+
+            <h3 slot="header">{{customHeader}}</h3>
+            <h5 slot="body">{{contentModal}}</h5>
+        </modal>
+    </div>
+
+
+
+
     <script src='https://code.jquery.com/jquery-2.2.4.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.1.1/js/mdb.min.js'></script>
     <script src='https://cdnjs.cloudflare.com/ajax/libs/vue/2.0.3/vue.js'></script>
