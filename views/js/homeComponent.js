@@ -19,13 +19,26 @@ var sessionUser = new Vue({
     }
 })
 
-socket.emit("name user", {}, function(data) {
-    if (data == "" || data == "undefined" || data == null) {
-        window.location.href = "/index";
-    } else {
-        sessionUser.userName = data;
-    }
+function getNameSession() {
+    socket.emit("name user", {}, function(data) {
+        if (data == "" || data == "undefined" || data == null) {
+            window.location.href = "/index";
+        } else {
+            sessionUser.userName = data;
+        }
+    })
+}
+
+socket.on("connect", function() {
+    console.log("conectado");
+    getNameSession();
+
 })
+
+socket.on('disconnect', function() {
+    window.location.href = "/index";
+});
+
 
 
 Vue.component('modal', {
@@ -64,6 +77,7 @@ Vue.component('task-list', {
     methods: {
         addTask: function addTask() {
             if (this.newTask) {
+
                 this.tasks.push({
                     title: this.newTask,
                     completed: false
