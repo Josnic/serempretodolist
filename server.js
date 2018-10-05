@@ -18,7 +18,7 @@ app.use(session({
 }));
 
 var mongoose = require('mongoose');
-var config = require('./config/config');
+var config = require('./back/config/config');
 
 const options = {
 
