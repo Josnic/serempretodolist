@@ -144,6 +144,16 @@ io.sockets.on("connection", function(socket) {
         Task.update(data, fn);
     })
 
+    socket.on("removeCompleted", function(data, fn) {
+        var Task = require("./back/controllers/Crud");
+        Task.removeCompleted(data, fn);
+    })
+
+    socket.on("removeAll", function(data, fn) {
+        var Task = require("./back/controllers/Crud");
+        Task.removeAll(data, fn);
+    })
+
 
     //  console.log(socket.handshake.session.user);
     //console.log(socket.handshake.session.admin);

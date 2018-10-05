@@ -43,6 +43,26 @@ TaskCRUD.delete = function(data, fn) {
     })
 }
 
+TaskCRUD.removeCompleted = function(data, fn) {
+    Task.remove({ complete: true }, function(err) {
+        if (err) {
+            fn({ error: err });
+        } else {
+            fn({ ok: true })
+        }
+    })
+}
+
+TaskCRUD.removeAll = function(data, fn) {
+    Task.remove({}, function(err) {
+        if (err) {
+            fn({ error: err });
+        } else {
+            fn({ ok: true })
+        }
+    })
+}
+
 TaskCRUD.update = function(data, fn) {
     var id = parseInt(data.id);
     var objUpdate = {

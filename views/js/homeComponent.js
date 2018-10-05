@@ -124,17 +124,35 @@ Vue.component('task-list', {
                 if (data.ok) {
                     listTask.splice(i, 1);
                 } else {
-                    modalAlert.contentModal = "Nose pudo eliminar la tarea. Intenta de nuevo.";
+                    modalAlert.contentModal = "No se pudo eliminar la tarea. Intenta de nuevo.";
                     modalAlert.showModal = true;
                 }
             })
 
         },
         clearCompleted: function clearCompleted() {
-            this.tasks = this.tasks.filter(this.inProgress);
+            var t = this;
+            socket.emit("removeCompleted", {}, function(data) {
+                if (data.ok) {
+                    t.tasks = t.tasks.filter(t.inProgress);
+
+                } else {
+                    modalAlert.contentModal = "No se pudo eliminar las tareas completadas. Intenta de nuevo.";
+                    modalAlert.showModal = true;
+                }
+            })
         },
         clearAll: function clearAll() {
-            this.tasks = [];
+            var t = this;
+            socket.emit("removeAll", {}, function(data) {
+                if (data.ok) {
+                    t.tasks = [];
+                } else {
+                    modalAlert.contentModal = "No se pudo eliminar las tareas. Intenta de nuevo.";
+                    modalAlert.showModal = true;
+                }
+            })
+
         },
 
         inProgress: function inProgress(task) {
