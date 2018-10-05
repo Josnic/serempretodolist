@@ -32,50 +32,51 @@ mongoose.connect(config.database, options); // connect to database
 
 // Authentication and Authorization Middleware
 var auth = function(req, res, next) {
-    if (req.session && req.session.admin)
+    if (req.session && req.session.admin) {
         return next();
-    else
+    } else {
         return res.sendStatus(401);
+    }
 };
+
 //servir archivos estaticos
-app.use(express.static(path.join(__dirname, '/views')));
+app.use('/js', express.static(__dirname + '/views/js'));
+app.use('/css', express.static(__dirname + '/views/css'));
 
 //adición de rutas
-app.get("/", function(req, res) {
+app.get("/index", function(req, res) {
     res.sendFile(path.join(__dirname, "/views/index.html"));
 });
 
-app.get(["/index", "/index.html"], function(req, res) {
-    res.redirect("/");
-})
 
-app.get("/home", auth, function(req, res) {
-    res.sendFile(path.join("/views/home.html"));
-})
-
-app.get("/home.html", auth, function(req, res) {
-    res.redirect("/home");
-})
-
-app.get("errorLogin", function(req, res) {
+app.get("/errorLogin", function(req, res) {
     res.sendFile(path.join(__dirname, "/views/errorLogin.html"));
 })
 
-
 app.post("/login", function(req, res) {
-    if (!req.query.username || !req.query.password) {
-        res.redirect("/errorLogin");
+    if (!req.body.user || !req.body.pass) {
+        res.redirect(req.headers.origin + "/errorLogin");
     } else {
-        var Login = require("./controllers/Login");
+        var Login = require("./back/controllers/Login");
         Login.validateUser(req, res);
     }
 })
+
 
 app.get("/logout", function(req, res) {
     req.session.destroy();
     res.redirect("/index");
 })
 
+
+app.get("/home", auth, function(req, res) {
+    res.sendFile(path.join(__dirname, "/views/home.html"));
+})
+
+
+app.get("/", function(req, res) {
+    res.redirect("/index");
+})
 
 app.use(function(req, res, next) {
     res.header("Access-Control-Allow-Origin", "*");
