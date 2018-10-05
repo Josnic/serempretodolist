@@ -77,16 +77,19 @@ Vue.component('task-list', {
     methods: {
         addTask: function addTask() {
             if (this.newTask) {
-                var myNewTask = this.newTask
-                socket.emit("add", { name: myNewTask }, function(data) {
+                var t = this;
+
+                var listTasks = this.tasks;
+                socket.emit("add", { name: this.newTask }, function(data) {
                     if (data.ok) {
-                        this.tasks.push({
+
+                        t.tasks.splice(0, 0, {
                             id: data.id,
-                            title: myNewTask,
+                            title: t.newTask,
                             completed: false
                         });
 
-                        myNewTask = '';
+                        t.newTask = '';
                     } else {
                         console.log(data.error);
                         modalAlert.contentModal = "No se pudo guardar la tarea. Intenta de nuevo.";
@@ -103,7 +106,18 @@ Vue.component('task-list', {
             task.completed = !task.completed;
         },
         removeTask: function removeTask(index) {
-            this.tasks.splice(index, 1);
+            console.log(this.tasks[index].id);
+            var listTask = this.tasks;
+            var i = index;
+            socket.emit("delete", { id: this.tasks[index].id }, function(data) {
+                if (data.ok) {
+                    listTask.splice(i, 1);
+                } else {
+                    modalAlert.contentModal = "Nose pudo eliminar la tarea. Intenta de nuevo.";
+                    modalAlert.showModal = true;
+                }
+            })
+
         },
         clearCompleted: function clearCompleted() {
             this.tasks = this.tasks.filter(this.inProgress);
@@ -137,20 +151,24 @@ Vue.component('task-item', {
     }
 });
 
+socket.emit("readAll", {}, function(data) {
+    if (data.ok) {
+        var arrayTask = [];
 
+        for (var i = 0; i < data.tasks.length; i++) {
+            arrayTask.push({
+                id: data.tasks[i].id,
+                title: data.tasks[i].name,
+                completed: data.tasks[i].complete
+            })
+        }
 
-new Vue({
-    el: '#app',
-    data: {
-        tasks: [{
-                title: 'Make todo list',
-                completed: true
-            },
-
-            {
-                title: 'Go skydiving',
-                completed: false
+        new Vue({
+            el: '#app',
+            data: {
+                tasks: arrayTask
             }
-        ]
+        });
     }
-});
+    console.log(data);
+})
