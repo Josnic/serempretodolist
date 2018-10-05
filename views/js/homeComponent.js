@@ -1,3 +1,12 @@
+var socket;
+socket = io.connect("http://localhost:3000", {
+    reconnection: true,
+    reconnectionDelay: 1000,
+    reconnectionDelayMax: 5000,
+    // reconnectionAttempts: 3
+});
+
+
 var sessionUser = new Vue({
     el: '#titleUser',
     data: {
