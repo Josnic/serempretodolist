@@ -56,9 +56,9 @@
 
 
     <script id="task-item" type="text/template">
-        <li class="tasks__item" id="{{task.id}}">
+        <li class="tasks__item">
             <button :class="className" @click.self="$emit('complete')">
-                      {{ task.title }}
+                     {{task.id}} {{ task.title }}
                     </button>
             <button class="tasks__item__remove button alert btn-danger pull-right" @click="$emit('remove')">
                       <i class="fa fa-times"></i>

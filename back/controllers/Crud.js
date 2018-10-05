@@ -2,9 +2,9 @@ var mongoose = require("mongoose");
 var Task = require("../models/Task");
 
 
-var Task = {};
+var TaskCRUD = {};
 
-Task.add = function(data, fn) {
+TaskCRUD.add = function(data, fn) {
     var d = new Date();
     var n = d.getTime();
     var newTask = new Task({
@@ -21,3 +21,4 @@ Task.add = function(data, fn) {
     });
 
 }
+module.exports = TaskCRUD;
