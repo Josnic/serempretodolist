@@ -162,7 +162,7 @@ Vue.component('task-item', {
 
 var appList = null;
 var socket;
-socket = io.connect("http://localhost:3000", {
+socket = io.connect("https://serempretodolist.herokuapp.com", {
     reconnection: true,
     reconnectionDelay: 1000,
     reconnectionDelayMax: 5000,
