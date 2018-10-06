@@ -33,13 +33,14 @@ TaskCRUD.readAll = function(data, fn) {
     });
 }
 
-TaskCRUD.delete = function(data, fn) {
+TaskCRUD.delete = function(data, fn, socket) {
     var id = parseInt(data.id);
     Task.findOneAndRemove({ id: id }, function(err) {
         if (err) {
             fn({ error: err });
         } else {
             fn({ ok: true, id: data.id })
+            socket.broadcast.emit("delete", { id: id });
         }
     })
 }

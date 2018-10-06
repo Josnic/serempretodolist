@@ -206,4 +206,16 @@ socket.on("add", function(data) {
         title: data.name,
         completed: data.complete
     });
+});
+
+socket.on("delete", function(data) {
+    var listTask = appList.tasks;
+    for (var i = 0; i < listTask.length; i++) {
+        if (listTask[i].id == data.id) {
+            listTask.splice(i, 1);
+            i = listTask.length;
+        }
+    }
+
+
 })
