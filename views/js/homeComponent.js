@@ -107,15 +107,7 @@ Vue.component('task-list', {
             var t = this;
             socket.emit("removeCompleted", {}, function(data) {
                 if (data.ok) {
-                    /*
-                    var listTask = t.tasks;
-                    for (var i = 0; i < listTask.length; i++) {
-                        if (listTask[i].completed == true) {
-                            listTask.splice(i, 1);
-                            i = 0;
-                        }
-                    }
-*/
+
                     t.tasks = t.tasks.filter(t.inProgress);
                 } else {
                     modalAlert.contentModal = "No se pudo eliminar las tareas completadas. Intenta de nuevo.";
@@ -172,7 +164,7 @@ Vue.component('task-item', {
 var appList = null;
 var socket;
 
-socket = io.connect("http://localhost:3000", {
+socket = io.connect("https://serempretodolist.herokuapp.com", {
     reconnection: true,
     reconnectionDelay: 1000,
     reconnectionDelayMax: 5000,
