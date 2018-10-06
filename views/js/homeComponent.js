@@ -29,23 +29,21 @@ var modalAlert = new Vue({
 Vue.component('task-list', {
     template: '#task-list',
     props: {
-        tasks: { default: [] },
-        showButton: { default: true }
+        tasks: { default: [] }
     },
 
     data: function data() {
         return {
-            newTask: ''
+            newTask: '',
+            showButton: false
         };
 
     },
     computed: {
         incomplete: function incomplete() {
             return this.tasks.filter(this.inProgress).length;
-        },
-        removeButtons: function removeButtons() {
-            return this.showButton;
         }
+
     },
 
     methods: {
@@ -145,12 +143,20 @@ Vue.component('task-list', {
 });
 
 
-
+var appItem = null;
 Vue.component('task-item', {
     template: '#task-item',
     props: ['task'],
+    data: function data() {
+        return {
+
+            showButton: false
+        };
+
+    },
     computed: {
         className: function className() {
+            appItem = this;
             var classes = ['tasks__item__toggle'];
             if (this.task.completed) {
                 classes.push('tasks__item__toggle--completed');
@@ -162,7 +168,7 @@ Vue.component('task-item', {
 
 var appList = null;
 var socket;
-socket = io.connect("https://serempretodolist.herokuapp.com", {
+socket = io.connect("http://localhost:3000", {
     reconnection: true,
     reconnectionDelay: 1000,
     reconnectionDelayMax: 5000,
@@ -184,8 +190,8 @@ socket.emit("readAll", {}, function(data) {
         appList = new Vue({
             el: '#app',
             data: {
-                tasks: arrayTask,
-                showButton: true
+                tasks: arrayTask
+
             }
         });
         getNameSession();
@@ -199,7 +205,10 @@ function getNameSession() {
         } else {
             console.log(data)
             sessionUser.userName = data.user;
-            // appList.show = data.check;
+            appList.$children[0].showButton = data.check;
+            appItem.showButton = data.check;
+
+
         }
     })
 }

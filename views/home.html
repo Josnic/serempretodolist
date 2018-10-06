@@ -30,10 +30,11 @@
             </h1>
             <div class="tasks__new input-group">
 
-                <input type="text" class="input-group-field form-control" v-model="newTask" @keyup.enter="addTask" placeholder="Nueva tarea">
+                <input type="text" class="input-group-field form-control" v-model="newTask" @keyup.enter="addTask" placeholder="Nueva tarea" v-show="showButton">
+
                 <span class="input-group-button">
                     <button @click="addTask" 
-                            class="btn btn-primary pull-right" v-if="removeButtons" 
+                            class="btn btn-primary pull-right" v-show="showButton" 
                             >
                       <i class="fa fa-plus"></i> Agregar
                     </button>
@@ -41,10 +42,10 @@
             </div>
 
             <div class="tasks__clear button-group pull-right">
-                <button class="btn btn-success" @click="clearCompleted">
+                <button class="btn btn-success" @click="clearCompleted" v-show="showButton">
                     <i class="fa fa-check"></i> Quitar terminadas
                   </button>
-                <button class="btn btn-danger" @click="clearAll">
+                <button class="btn btn-danger" @click="clearAll" v-show="showButton">
                     <i class="fa fa-trash"></i> Quitar todo
                   </button>
             </div>
@@ -61,7 +62,7 @@
             <button :class="className" @click.self="$emit('complete')">
                       {{ task.title }}
                     </button>
-            <button class="tasks__item__remove button alert btn-danger pull-right" @click="$emit('remove')">
+            <button class="tasks__item__remove button alert btn-danger pull-right" @click="$emit('remove')" v-show="showButton">
                       <i class="fa fa-times"></i>
                     </button>
         </li>
