@@ -65,7 +65,7 @@ TaskCRUD.removeAll = function(data, fn) {
     })
 }
 
-TaskCRUD.update = function(data, fn) {
+TaskCRUD.update = function(data, fn, socket) {
     var id = parseInt(data.id);
     var objUpdate = {
         complete: data.complete
@@ -76,6 +76,7 @@ TaskCRUD.update = function(data, fn) {
             fn({ error: err });
         } else {
             fn({ ok: true, id: data.id })
+            socket.broadcast.emit("update", { id: id, complete: data.complete })
         }
     });
 }

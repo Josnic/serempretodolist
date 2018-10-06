@@ -216,6 +216,14 @@ socket.on("delete", function(data) {
             i = listTask.length;
         }
     }
+})
 
-
+socket.on("update", function(data) {
+    var listTask = appList.tasks;
+    for (var i = 0; i < listTask.length; i++) {
+        if (listTask[i].id == data.id) {
+            listTask[i].completed = data.complete;
+            i = listTask.length;
+        }
+    }
 })

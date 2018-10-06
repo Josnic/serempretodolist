@@ -141,7 +141,7 @@ io.sockets.on("connection", function(socket) {
 
     socket.on("update", function(data, fn) {
         var Task = require("./back/controllers/Crud");
-        Task.update(data, fn);
+        Task.update(data, fn, socket);
     })
 
     socket.on("removeCompleted", function(data, fn) {
