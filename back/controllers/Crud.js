@@ -4,7 +4,7 @@ var Task = require("../models/Task");
 
 var TaskCRUD = {};
 
-TaskCRUD.add = function(data, fn) {
+TaskCRUD.add = function(data, fn, socket) {
     var d = new Date();
     var n = d.getTime();
     var newTask = new Task({
@@ -16,7 +16,8 @@ TaskCRUD.add = function(data, fn) {
         if (err) {
             fn({ error: err });
         } else {
-            fn({ ok: true, id: n })
+            fn({ ok: true, id: n });
+            socket.broadcast.emit("add", { id: n, name: data.name, complete: false });
         }
     });
 }

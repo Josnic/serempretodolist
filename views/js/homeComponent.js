@@ -1,12 +1,3 @@
-var socket;
-socket = io.connect("http://localhost:3000", {
-    reconnection: true,
-    reconnectionDelay: 1000,
-    reconnectionDelayMax: 5000,
-    // reconnectionAttempts: 3
-});
-
-
 var sessionUser = new Vue({
     el: '#titleUser',
     data: {
@@ -18,27 +9,6 @@ var sessionUser = new Vue({
         }
     }
 })
-
-function getNameSession() {
-    socket.emit("name user", {}, function(data) {
-        if (data == "" || data == "undefined" || data == null) {
-            window.location.href = "/index";
-        } else {
-            sessionUser.userName = data;
-        }
-    })
-}
-
-socket.on("connect", function() {
-    console.log("conectado");
-    getNameSession();
-
-})
-
-socket.on('disconnect', function() {
-    window.location.href = "/index";
-});
-
 
 
 Vue.component('modal', {
@@ -181,6 +151,13 @@ Vue.component('task-item', {
 });
 
 var appList = null;
+var socket;
+socket = io.connect("http://localhost:3000", {
+    reconnection: true,
+    reconnectionDelay: 1000,
+    reconnectionDelayMax: 5000,
+    // reconnectionAttempts: 3
+});
 
 socket.emit("readAll", {}, function(data) {
     if (data.ok) {
@@ -201,4 +178,32 @@ socket.emit("readAll", {}, function(data) {
             }
         });
     }
+})
+
+function getNameSession() {
+    socket.emit("name user", {}, function(data) {
+        if (data == "" || data == "undefined" || data == null) {
+            window.location.href = "/index";
+        } else {
+            sessionUser.userName = data;
+        }
+    })
+}
+
+socket.on("connect", function() {
+    console.log("conectado");
+    getNameSession();
+
+})
+
+socket.on('disconnect', function() {
+    window.location.href = "/index";
+});
+
+socket.on("add", function(data) {
+    appList.tasks.splice(0, 0, {
+        id: data.id,
+        title: data.name,
+        completed: data.complete
+    });
 })

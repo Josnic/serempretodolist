@@ -121,12 +121,12 @@ io.sockets.on("connection", function(socket) {
     io.sockets.emit('users connected', socketCount);
     console.log(socket.id);
     socket.on("name user", function(data, fn) {
-        fn(socket.handshake.session.user)
+        fn(socket.handshake.session.user);
     })
 
     socket.on("add", function(data, fn) {
         var Task = require("./back/controllers/Crud");
-        Task.add(data, fn);
+        Task.add(data, fn, socket);
     })
 
     socket.on("readAll", function(data, fn) {
