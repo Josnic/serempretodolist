@@ -206,7 +206,9 @@ function getNameSession() {
             console.log(data)
             sessionUser.userName = data.user;
             appList.$children[0].showButton = data.check;
-            appItem.showButton = data.check;
+            if (appItem !== null) {
+                appItem.showButton = data.check;
+            }
 
 
         }
