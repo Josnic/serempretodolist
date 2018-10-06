@@ -114,8 +114,11 @@ io.sockets.on("connection", function(socket) {
     })
 
     socket.on("add", function(data, fn) {
-
-        Task.add(data, fn, socket);
+        if (socket.handshake.session.admin == true) {
+            Task.add(data, fn, socket);
+        } else {
+            fn({ error: "No existen permisos para agregar tareas." });
+        }
     })
 
     socket.on("readAll", function(data, fn) {
@@ -124,23 +127,31 @@ io.sockets.on("connection", function(socket) {
     })
 
     socket.on("delete", function(data, fn) {
-
-        Task.delete(data, fn, socket);
+        if (socket.handshake.session.admin == true) {
+            Task.delete(data, fn, socket);
+        } else {
+            fn({ error: "No existen permisos para borrar tareas." });
+        }
     })
 
     socket.on("update", function(data, fn) {
-
         Task.update(data, fn, socket);
     })
 
     socket.on("removeCompleted", function(data, fn) {
-
-        Task.removeCompleted(data, fn, socket);
+        if (socket.handshake.session.admin == true) {
+            Task.removeCompleted(data, fn, socket);
+        } else {
+            fn({ error: "No existen permisos para quitar tareas completadas." });
+        }
     })
 
     socket.on("removeAll", function(data, fn) {
-
-        Task.removeAll(data, fn, socket);
+        if (socket.handshake.session.admin == true) {
+            Task.removeAll(data, fn, socket);
+        } else {
+            fn({ error: "No existen permisos para eliminar todas las tareas." });
+        }
     })
 
 
