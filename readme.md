@@ -26,7 +26,7 @@ La aplicación consta de un Frontend y un Backend (views y back) y un archivo .J
 * `createUsers.js`: Es un archivo adicional que permite crear usuarios para el login en la colección `User`de la Base de Datos. 
 * `package.json`: Este archivo contiene las dependencias de la aplicación. Es un archivo gestionado por `NPM`
 
-Para ver en funcionamiento puede ir [aquí](https://serempretodolist.herokuapp.com/index/).
+Para ver en funcionamiento puede ir [aquí](https://serempretodolist.herokuapp.com/index).
 
 ## Agradecimientos
 
