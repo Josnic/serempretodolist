@@ -22,24 +22,12 @@ session = require("express-session")({
 // Attach session
 app.use(session);
 
-// Share session with io sockets
-/*
-io.use(sharedsession(session));
 
-session = require('express-session');
-app.use(session({
-    secret: '2C44-4D44-WppQ38S',
-    resave: true,
-    saveUninitialized: true
-}));
-*/
 io.sockets.use(sharedsession(session));
-
-
 
 var mongoose = require('mongoose');
 var config = require('./back/config/config');
-
+var Task = require("./back/controllers/Crud");
 const options = {
 
     autoIndex: false,
@@ -115,6 +103,7 @@ var socketCount = 0
 
 users = {}, socks = {};
 
+
 io.sockets.on("connection", function(socket) {
 
     socketCount++;
@@ -125,32 +114,32 @@ io.sockets.on("connection", function(socket) {
     })
 
     socket.on("add", function(data, fn) {
-        var Task = require("./back/controllers/Crud");
+
         Task.add(data, fn, socket);
     })
 
     socket.on("readAll", function(data, fn) {
-        var Task = require("./back/controllers/Crud");
+
         Task.readAll(data, fn);
     })
 
     socket.on("delete", function(data, fn) {
-        var Task = require("./back/controllers/Crud");
+
         Task.delete(data, fn, socket);
     })
 
     socket.on("update", function(data, fn) {
-        var Task = require("./back/controllers/Crud");
+
         Task.update(data, fn, socket);
     })
 
     socket.on("removeCompleted", function(data, fn) {
-        var Task = require("./back/controllers/Crud");
+
         Task.removeCompleted(data, fn, socket);
     })
 
     socket.on("removeAll", function(data, fn) {
-        var Task = require("./back/controllers/Crud");
+
         Task.removeAll(data, fn, socket);
     })
 
