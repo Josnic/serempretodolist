@@ -41,6 +41,7 @@ Vue.component('task-list', {
     },
     computed: {
         incomplete: function incomplete() {
+            appList = this;
             return this.tasks.filter(this.inProgress).length;
         }
 
@@ -49,6 +50,7 @@ Vue.component('task-list', {
     methods: {
 
         addTask: function addTask() {
+
             if (this.newTask) {
                 var t = this;
                 socket.emit("add", { name: this.newTask }, function(data) {
@@ -105,7 +107,7 @@ Vue.component('task-list', {
             var t = this;
             socket.emit("removeCompleted", {}, function(data) {
                 if (data.ok) {
-
+                    /*
                     var listTask = t.tasks;
                     for (var i = 0; i < listTask.length; i++) {
                         if (listTask[i].completed == true) {
@@ -113,7 +115,8 @@ Vue.component('task-list', {
                             i = 0;
                         }
                     }
-
+*/
+                    t.tasks = t.tasks.filter(t.inProgress);
                 } else {
                     modalAlert.contentModal = "No se pudo eliminar las tareas completadas. Intenta de nuevo.";
                     modalAlert.showModal = true;
@@ -138,32 +141,29 @@ Vue.component('task-list', {
         },
         isCompleted: function isCompleted(task) {
             return task.completed;
+        },
+        checkButton: function checkButton() {
+            console.log(this.showButton)
+            return this.showButton;
         }
     }
 });
 
 
-var appItem = null;
+
 Vue.component('task-item', {
     template: '#task-item',
-    props: ['task'],
-    data: function data() {
-        return {
+    props: ['task', 'showButton'],
 
-            showButton: false
-        };
-
-    },
     computed: {
         className: function className() {
-            if (appItem == null) {
-                appItem = this;
-                getNameSession();
-            }
+
             var classes = ['tasks__item__toggle'];
             if (this.task.completed) {
                 classes.push('tasks__item__toggle--completed');
             }
+            console.log(this.showButton)
+
             return classes.join(' ');
         }
     }
@@ -171,7 +171,8 @@ Vue.component('task-item', {
 
 var appList = null;
 var socket;
-socket = io.connect("https://serempretodolist.herokuapp.com", {
+
+socket = io.connect("http://localhost:3000", {
     reconnection: true,
     reconnectionDelay: 1000,
     reconnectionDelayMax: 5000,
@@ -190,7 +191,7 @@ socket.emit("readAll", {}, function(data) {
             })
         }
 
-        appList = new Vue({
+        new Vue({
             el: '#app',
             data: {
                 tasks: arrayTask
@@ -204,15 +205,11 @@ socket.emit("readAll", {}, function(data) {
 function getNameSession() {
     socket.emit("name user", {}, function(data) {
         if (data == "" || data == "undefined" || data == null) {
-            window.location.href = "/index";
+            window.location.href = "/logout";
         } else {
-            console.log(data)
-            sessionUser.userName = data.user;
-            appList.$children[0].showButton = data.check;
-            if (appItem !== null) {
-                appItem.showButton = data.check;
-            }
 
+            sessionUser.userName = data.user;
+            appList.showButton = data.check;
 
         }
     })
@@ -223,10 +220,15 @@ socket.on("connect", function() {
 })
 
 socket.on('disconnect', function() {
-    window.location.href = "/index";
+    window.location.href = "/logout";
 });
+socket.on('error', function(err) {
+    window.location.href = "/logout";
+})
+
 
 socket.on("add", function(data) {
+
     appList.tasks.splice(0, 0, {
         id: data.id,
         title: data.name,
@@ -256,12 +258,15 @@ socket.on("update", function(data) {
 
 socket.on("removeCompleted", function() {
     var listTask = appList.tasks;
+
     for (var i = 0; i < listTask.length; i++) {
         if (listTask[i].completed == true) {
             listTask.splice(i, 1);
-            i = 0;
+            i = i - 1;
         }
     }
+
+
 })
 
 socket.on("removeAll", function() {
