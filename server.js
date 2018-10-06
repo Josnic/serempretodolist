@@ -146,12 +146,12 @@ io.sockets.on("connection", function(socket) {
 
     socket.on("removeCompleted", function(data, fn) {
         var Task = require("./back/controllers/Crud");
-        Task.removeCompleted(data, fn);
+        Task.removeCompleted(data, fn, socket);
     })
 
     socket.on("removeAll", function(data, fn) {
         var Task = require("./back/controllers/Crud");
-        Task.removeAll(data, fn);
+        Task.removeAll(data, fn, socket);
     })
 
 

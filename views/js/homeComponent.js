@@ -104,7 +104,14 @@ Vue.component('task-list', {
             var t = this;
             socket.emit("removeCompleted", {}, function(data) {
                 if (data.ok) {
-                    t.tasks = t.tasks.filter(t.inProgress);
+
+                    var listTask = t.tasks;
+                    for (var i = 0; i < listTask.length; i++) {
+                        if (listTask[i].completed == true) {
+                            listTask.splice(i, 1);
+                            i = 0;
+                        }
+                    }
 
                 } else {
                     modalAlert.contentModal = "No se pudo eliminar las tareas completadas. Intenta de nuevo.";
@@ -226,4 +233,18 @@ socket.on("update", function(data) {
             i = listTask.length;
         }
     }
+});
+
+socket.on("removeCompleted", function() {
+    var listTask = appList.tasks;
+    for (var i = 0; i < listTask.length; i++) {
+        if (listTask[i].completed == true) {
+            listTask.splice(i, 1);
+            i = 0;
+        }
+    }
+})
+
+socket.on("removeAll", function() {
+    appList.tasks = [];
 })

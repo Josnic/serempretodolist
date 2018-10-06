@@ -45,22 +45,24 @@ TaskCRUD.delete = function(data, fn, socket) {
     })
 }
 
-TaskCRUD.removeCompleted = function(data, fn) {
+TaskCRUD.removeCompleted = function(data, fn, socket) {
     Task.remove({ complete: true }, function(err) {
         if (err) {
             fn({ error: err });
         } else {
             fn({ ok: true })
+            socket.broadcast.emit("removeCompleted");
         }
     })
 }
 
-TaskCRUD.removeAll = function(data, fn) {
+TaskCRUD.removeAll = function(data, fn, socket) {
     Task.remove({}, function(err) {
         if (err) {
             fn({ error: err });
         } else {
-            fn({ ok: true })
+            fn({ ok: true });
+            socket.broadcast.emit("removeAll");
         }
     })
 }
