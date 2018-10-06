@@ -29,7 +29,8 @@ var modalAlert = new Vue({
 Vue.component('task-list', {
     template: '#task-list',
     props: {
-        tasks: { default: [] }
+        tasks: { default: [] },
+        showButton: { default: true }
     },
 
     data: function data() {
@@ -41,15 +42,17 @@ Vue.component('task-list', {
     computed: {
         incomplete: function incomplete() {
             return this.tasks.filter(this.inProgress).length;
+        },
+        removeButtons: function removeButtons() {
+            return this.showButton;
         }
     },
 
     methods: {
+
         addTask: function addTask() {
             if (this.newTask) {
                 var t = this;
-
-                var listTasks = this.tasks;
                 socket.emit("add", { name: this.newTask }, function(data) {
                     if (data.ok) {
 
@@ -181,9 +184,11 @@ socket.emit("readAll", {}, function(data) {
         appList = new Vue({
             el: '#app',
             data: {
-                tasks: arrayTask
+                tasks: arrayTask,
+                showButton: true
             }
         });
+        getNameSession();
     }
 })
 
@@ -192,15 +197,15 @@ function getNameSession() {
         if (data == "" || data == "undefined" || data == null) {
             window.location.href = "/index";
         } else {
-            sessionUser.userName = data;
+            console.log(data)
+            sessionUser.userName = data.user;
+            // appList.show = data.check;
         }
     })
 }
 
 socket.on("connect", function() {
-    console.log("conectado");
-    getNameSession();
-
+    console.log("connect");
 })
 
 socket.on('disconnect', function() {

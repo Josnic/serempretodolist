@@ -108,9 +108,10 @@ io.sockets.on("connection", function(socket) {
 
     socketCount++;
     io.sockets.emit('users connected', socketCount);
-    console.log(socket.id);
+
     socket.on("name user", function(data, fn) {
-        fn(socket.handshake.session.user);
+        var show = socket.handshake.session.admin
+        fn({ user: socket.handshake.session.user, check: show });
     })
 
     socket.on("add", function(data, fn) {
@@ -154,9 +155,6 @@ io.sockets.on("connection", function(socket) {
         }
     })
 
-
-    //  console.log(socket.handshake.session.user);
-    //console.log(socket.handshake.session.admin);
 });
 
 
