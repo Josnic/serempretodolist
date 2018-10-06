@@ -150,13 +150,16 @@ Vue.component('task-item', {
     data: function data() {
         return {
 
-            showButton: true
+            showButton: false
         };
 
     },
     computed: {
         className: function className() {
-            appItem = this;
+            if (appItem == null) {
+                appItem = this;
+                getNameSession();
+            }
             var classes = ['tasks__item__toggle'];
             if (this.task.completed) {
                 classes.push('tasks__item__toggle--completed');
