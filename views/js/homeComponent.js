@@ -150,7 +150,7 @@ Vue.component('task-item', {
     data: function data() {
         return {
 
-            showButton: false
+            showButton: true
         };
 
     },
